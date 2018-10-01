@@ -2,7 +2,7 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    flash       = require("connect-flash");
+    flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     expressSanitizer = require("express-sanitizer"),
@@ -63,9 +63,6 @@ app.listen(process.env.PORT, process.env.IP, function(){
 
 
 //TODO:
-    //protect the update and delete post routes with middleware so someone can't use postman
-    //to edit or delete the campground if they aren't the author
-
     //break up the posts.js file into separate files with post CRUD and likes and comments in separate routes
 
     //add image upload

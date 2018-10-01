@@ -1,6 +1,6 @@
 var express     = require("express"),
     router      = express.Router(),
-    errorHandling      = require("../errorHandling");
+    errorHandling      = require("../errorHandling"),
     middleware  = require("../middleware");
 
 var Post = require("../models/post.js");
@@ -13,7 +13,7 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.render("posts/home", {posts:foundPosts})
+            res.render("posts/home", {posts:foundPosts});
         }
     });
 });
@@ -109,7 +109,6 @@ router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
                         }
                 }
 
-                    
                 //update the post
                 Post.findByIdAndUpdate(req.params.id, newPost, function(error, updatedPost){
                     if (error) {
@@ -132,6 +131,8 @@ router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
         });
 });
 
+
+
 //SHOW EDIT FORM
 router.get("/posts/:id/edit", function(req, res){
     Post.findById(req.params.id, function(err, foundPost){
@@ -146,7 +147,7 @@ router.get("/posts/:id/edit", function(req, res){
 
 //UPDATE ROUTE
 router.put("/posts/:id", function(req, res){
-    Post.findOneAndUpdate({_id:req.params.id}, req.body.post, function(err, updatedCampground){
+    Post.findOneAndUpdate({_id:req.params.id}, middleware.checkPostOwnership, req.body.post, function(err, updatedCampground){
         if (err) {
             console.log(err);
         } else {
@@ -157,7 +158,7 @@ router.put("/posts/:id", function(req, res){
 });
 
 //DELETE POST ROUTE
-router.delete("/posts/:id", function(req, res){
+router.delete("/posts/:id", middleware.checkPostOwnership, function(req, res){
     Post.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);

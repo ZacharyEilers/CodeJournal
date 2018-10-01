@@ -1,32 +1,36 @@
 var Post = require("../models/post");
+var errorHandling = require("../errorHandling");
 
 //all the middleware goes here
 
 var middlewareObj = {};
 
-// middlewareObj.checkCampgroundOwnership = function(req, res, next){
+middlewareObj.checkPostOwnership = function(req, res, next){
    
-//    //is the user authenticated?
-//    if(req.isAuthenticated()){
+   //is the user authenticated?
+   if(req.isAuthenticated()){
            
-//            Campground.findById(req.params.id, function(err, foundCampground){
-//                if (err){
-//                    res.redirect("back");
-//                } else{
-//                    //does the user own the campground?
-//                    if(foundCampground.author.id.equals(req.user.id)){
-//                        next();
-//                    } else{
-//                        res.send("you do not have permission to do that");
-//                    }
-//                }
-//            });
+           //if so, find the post we are trying to modify
+            Post.findById(req.params.id, function(err, foundPost){
+               if (err){
+                  errorHandling.databaseError();
+                   res.redirect("back");
+               } else{
+                   //does the user own the campground?
+                   if(foundPost.author.id.equals(req.user.id)){
+                        next();
+                   } else{
+                        res.send("you do not have permission to do that");
+                   }
+               }
+            });
            
-           
-//        } else{
-//            res.redirect("back");
-//        }
-// }
+         //if the user is not authenticated
+       } else{
+            req.flash("error", "You must be logged in to do that");
+            res.redirect("back");
+       }
+}
 
 // middlewareObj.checkCommentOwnership = function(req, res, next){
    
