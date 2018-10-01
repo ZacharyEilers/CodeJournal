@@ -1,0 +1,117 @@
+<% include ../partials/header.ejs%>
+    <div class = "container">
+        
+     <% if (currentUser && post.author.id.equals(currentUser._id) ){ %>
+            <div class="card">
+                <h5 class="card-header">Only you, <em><%=post.author.username%></em> can see these controls</h5>
+                
+                <div class="card-body">
+
+                    <a href="/posts/<%=post._id%>/edit" class = "btn btn-outline-primary">Edit</a>
+
+                    <form action = "/posts/<%=post._id%>?_method=DELETE" method = "POST" class = "inline-form">
+                        <input type="submit" value="Delete" class = "btn btn-outline-danger">
+                    </form> 
+
+                </div>
+            </div>
+        <% } %>
+        
+            <div class = "row">
+                <div class = "col-xs-12 col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><%=post.author.username%></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">author's real name</h6>
+                            <p class="card-text">Bio text Bio text Bio text Bio
+                             text Bio text Bio text Bio text Bio text</p>
+                            <a href="" class="btn btn-outline-primary">Follow Me</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+
+                        <%if(enabledLikeButton){%>
+                            <form action = "/posts/<%=post._id%>/like" method = "POST" class = "inline-form">
+                                   <button class="btn btn-outline-success" >Like: <%=post.likes%></button>
+                                   
+                            </form>
+                            <%} else { %>
+                            <form action = "/posts/<%=post._id%>/unlike" method = "POST" class = "inline-form">
+                                    
+                                    <button class="btn btn-outline-danger">Unlike: <%=post.likes%></button>
+                            </form>
+                            <%}%>
+                       
+                            <a href="#comments" class="btn btn-outline-secondary">Comment</a>
+
+                            <div class="mt-xl-3">
+                               <% if(post.uniqueImpressions === 0){ %>
+                                    <p class = "text-muted">Nobody has viewed this post yet</p>
+                               <% } else if(post.uniqueImpressions === 1){ %>
+                                    <p class = "text-muted">You are the first person to view this post!</p>
+                               <% } else{ %>
+                                    <p class = "text-muted"><%=post.uniqueImpressions%> people have viewed this post</p>
+                              <% } %>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class = "col-xs-12 col-md-9">
+                        <div class="card">
+                            <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+
+                        <div class="card-body">
+
+                            <h1 class="display-4 card-title"><%=post.title%></h1>
+
+                            <h5 class="card-title"><%=post.author.username%></h5>
+
+                            <h6 class="card-subtitle mb-2 text-muted"><%=post.created.toDateString()%></h6>
+
+                            <p class="card-text"><%-post.body%></p>
+                        </div>
+
+                        </div>
+
+                    <div class = "card" id = "comments">
+                        <div class = "card-body">
+                            <h1 class="display-6">Add a comment</h1>
+                            <form class="form" action = "/posts/<%=post._id%>/comment" method = "POST">
+                                    <div class = "form-group">
+                                        <input type="text" name = "comment[body]" class="form-control" id="inlineFormInputName2" placeholder="Comment">
+                                        <small class="form-text text-muted">Comment as <%=currentUser.username%></small>
+                                    </div>
+                                    <div class = "form-group">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <% post.comments.forEach(function(comment){ %>
+                        <script>
+                            console.log("<%=comment.body%>");
+                        </script>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class = "card-title"><%=comment.author.username%></h5>
+
+                                <!--Possibly include moment js for formatting these comments to dates formatted as
+                            time from now Ex. 185 days ago http://momentjs.com/docs/#/displaying/fromnow/-->
+
+                                <h6 class="card-subtitle mb-2 text-muted"><%=comment.created.toDateString()%></h6>
+                                <p class="card-text"><%=comment.body%></p>
+                            </div>
+                        </div>
+                       <% }) %>
+                </div>
+            </div>
+    </div>
+
+<% include ../partials/footer.ejs%>

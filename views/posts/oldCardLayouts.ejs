@@ -1,0 +1,26 @@
+
+
+<div class="card">
+    <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title"><%=post.title%></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>
+            <p class="card-text"><%-post.body.substring(0,100)%></p>
+            <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
+        </div>
+</div>
+
+
+
+<div class="card bg-dark text-white">
+                    <img class="card-img" src="https://bit.ly/2NeIetx" alt="Card image">
+                    
+                    <div class="card-img-overlay">
+                        <h5 class="card-title"><%=post.title%></h5>
+                        <p class="card-subtitle text-muted"><%=post.author.username%></p>
+                    </div>
+                    <div class = "card-body">
+                        <p class="card-text"><%-post.body.substring(0,100)%></p>
+                    </div>
+
+                </div>
