@@ -56,11 +56,19 @@ app.use(function(req, res, next){
 app.use("/", postRoutes);
 app.use("/", indexRoutes);
 
+if (process.env.PORT && process.env.IP){
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("The Code Journal Server has started on port 3000!!");
+    console.log("you're on cloud9");
 });
 
+} else{
+    app.listen(3000, function(){
+        console.log("The Code Journal Server has started on port 3000!");
+        console.log("You're on your own computer at home");
+    });
+}
 
 //TODO:
     //break up the posts.js file into separate files with post CRUD and likes and comments in separate routes
