@@ -12,11 +12,11 @@ var express     = require("express"),
 //REQUIRING ROUTES
     var postRoutes  = require("./routes/posts.js");
     var indexRoutes = require("./routes/index.js");
+    var likeAndCommentRoutes = require("./routes/likesAndComments.js");
 
 
 //MODELS
-
-var User = require("./models/user.js");1
+var User = require("./models/user.js");
 
 mongoose.connect("mongodb://localhost/codejournal", {useNewUrlParser: true});
 mongoose.set('useFindAndModify', false);
@@ -55,6 +55,7 @@ app.use(function(req, res, next){
 
 app.use("/", postRoutes);
 app.use("/", indexRoutes);
+app.use("/", likeAndCommentRoutes);
 
 if (process.env.PORT && process.env.IP){
 

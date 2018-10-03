@@ -1,5 +1,6 @@
 <% include ../partials/header.ejs%>
     <div class = "container">
+        
     <div class = "row">
     <div class = "col-lg-4 order-md-last order-sm-first">
         <div class="card" style="width: 18rem;">
@@ -15,6 +16,16 @@
         </div>
     </div>
         <div class = "col-lg-8 order-md-first order-sm-last">
+            
+            <h1 class = "text-left">Home</h1>
+            
+            <form class = "form-inline" action = "/home" method = "GET">
+                <div>
+                     <input type = "text" name = "search" class = "form-control" placeholder = "Search all posts">
+                     <input type = "submit" value = "search" class = "btn btn-primary">
+                </div>
+            </form>
+            
             <% posts.forEach(function(post){ %>
                 <div class="card">
                     <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
