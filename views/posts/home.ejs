@@ -21,11 +21,14 @@
 
             <form action = "/home" method = "GET">
                 <div class="form-group">
-                    <label for="searchInput" class="sr-only">Search</label>
-                    <input name = "search" type="text" class="form-control" id="searchInput" placeholder="Search all posts">
+                    <div class = "form-group">
+                         <label for="searchInput" class="sr-only">Search</label>
+                         <input name = "search" type="text" class="form-control" id="searchInput" placeholder="Search all posts">
+                    </div>
+                    <div class = "form-group">
+                        <button type = "submit" class = "btn btn-outline-primary btn-block">Search</button>
+                    </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
             </form>
             
             <% posts.forEach(function(post){ %>
