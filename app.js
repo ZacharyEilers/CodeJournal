@@ -81,10 +81,3 @@ app.listen(process.env.PORT, process.env.IP, function(){
     //add rich text editing for posts and comments
 
     //async ajax for comments and likes
-
-
-
-//THIS WAS A HUGE CHANGE LETS SEE IF WE CAN PUSH AND PULL FROM GITHUB TO SYNC CHANGES
-
-
-//this was a major change

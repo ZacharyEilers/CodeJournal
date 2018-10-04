@@ -9,13 +9,35 @@ var Comment = require("../models/comment.js");
 
 //HOME PAGE - SHOW ALL POSTS
 router.get("/home", middleware.isLoggedIn, function(req, res){
-    Post.find({}, function(err, foundPosts){
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("posts/home", {posts:foundPosts});
-        }
-    });
+
+    if (req.query.search) {
+
+        const regex  = new RegExp(escapeRegex(req.query.search), 'gi');
+
+        Post.find({title: regex}, function(err, foundPosts){
+            if (err) {
+                console.log(err);
+            } else {
+                Post.find({body: regex}, function(err, postsWithQueryInBody){
+                    if (err) {
+                        console.log(err);                        
+                    } else {
+                        var searchedPosts = foundPosts.concat(postsWithQueryInBody);
+                        res.render("posts/home", {posts: searchedPosts}); 
+                    }
+
+                });
+            }
+        });
+    } else {
+        Post.find({}, function(err, foundPosts){
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("posts/home", {posts:foundPosts});
+            }
+        });
+    }
 });
 
 //CREATE POST
@@ -168,5 +190,9 @@ router.delete("/posts/:id", middleware.checkPostOwnership, function(req, res){
         }
     })
 });
+
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports = router;

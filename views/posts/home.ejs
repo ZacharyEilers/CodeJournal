@@ -18,12 +18,14 @@
         <div class = "col-lg-8 order-md-first order-sm-last">
             
             <h1 class = "text-left">Home</h1>
-            
-            <form class = "form-inline" action = "/home" method = "GET">
-                <div>
-                     <input type = "text" name = "search" class = "form-control" placeholder = "Search all posts">
-                     <input type = "submit" value = "search" class = "btn btn-primary">
+
+            <form action = "/home" method = "GET">
+                <div class="form-group">
+                    <label for="searchInput" class="sr-only">Search</label>
+                    <input name = "search" type="text" class="form-control" id="searchInput" placeholder="Search all posts">
                 </div>
+
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
             </form>
             
             <% posts.forEach(function(post){ %>
