@@ -12,21 +12,15 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 
     if (req.query.search) {
 
+        //TODO: add some sort of ranking algorithm here and clean up the form, maybe create a results page
+
         const regex  = new RegExp(escapeRegex(req.query.search), 'gi');
 
-        Post.find({title: regex}, function(err, foundPosts){
+        Post.find({$or:[{title: regex},{body:regex},{'author.username': regex}]}, function(err, searchedPosts){
             if (err) {
                 console.log(err);
             } else {
-                Post.find({body: regex}, function(err, postsWithQueryInBody){
-                    if (err) {
-                        console.log(err);                        
-                    } else {
-                        var searchedPosts = foundPosts.concat(postsWithQueryInBody);
-                        res.render("posts/home", {posts: searchedPosts}); 
-                    }
-
-                });
+                res.render("posts/home", {posts: searchedPosts}); 
             }
         });
     } else {
