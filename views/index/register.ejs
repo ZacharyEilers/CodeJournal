@@ -15,6 +15,24 @@
             <label for="passwordInput">Password</label>
             <input name = "password" type="password" class="form-control" id="passwordInput" placeholder="Your password" autocomplete="new-password">
         </div>
+
+        <%if(showModeratorCodeInput){%>
+            <div class="form-group">
+                <label for="moderatorCode">Moderator Code</label>
+                <input name = "moderatorCode" type="password" class="form-control" id="moderatorCode" placeholder="Moderator Code" autocomplete="new-password">
+            </div>
+        <%}%>
+
+        <%if(showAdminCodeInput){%>
+            <div class="form-group">
+                <label for="adminCode">Admin Code</label>
+                <input name = "adminCode" type="password" class="form-control" id="adminCode" placeholder="Admin Code" autocomplete="new-password">
+            </div>
+        <%}%>
+
+        <%if(urlKey){%>
+            <input type = "hidden" name = "urlKey" value = "<%=urlKey%>">
+        <%}%>
         
         <button type="submit" class="btn btn-primary">Submit</button>
 

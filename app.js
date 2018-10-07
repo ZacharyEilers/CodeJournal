@@ -8,6 +8,10 @@ var express     = require("express"),
     expressSanitizer = require("express-sanitizer"),
     methodOverride = require("method-override");
 
+var seeds = require("./seeds.js");
+
+seeds.seedDBWithCodes();
+
 
 //REQUIRING ROUTES
     var postRoutes  = require("./routes/posts.js");
