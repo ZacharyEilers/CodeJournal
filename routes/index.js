@@ -5,9 +5,6 @@ var express     = require("express"),
     User        = require("../models/user.js"),
     AdminCode   = require("../models/adminModeratorModels/adminCode.js"),
     ModeratorCode = require("../models/adminModeratorModels/moderatorCode.js");
-    AdminCodeUrlKey = require("../models/adminModeratorModels/adminCodeUrlKey.js"),
-    ModeratorCodeUrlKey = require("../models/adminModeratorModels/moderatorCodeUrlKey.js");
-
 //root route
 router.get("/", function(req, res){
     res.render("index/landing");
@@ -15,7 +12,7 @@ router.get("/", function(req, res){
 
 // show register form
 router.get("/register", function(req, res){
-   res.render("index/register", {showModeratorCodeInput: false, showAdminCodeInput: false, urlKey: null});
+   res.render("index/register", {showCodeInput: false});
 });
 
 //check if key exists in database
@@ -24,67 +21,8 @@ router.get("/register", function(req, res){
 //if doesn't fit length, then send a rejection page, with link to home page and link to creating regular account
 
 //admin/moderator register form
-router.get("/register/:key", function(req, res){
-
-    if (req.params.key.length===25) {
-        //this a Admin code
-        console.log("a admin is trying to sign up");
-        AdminCodeUrlKey.findOne({key: req.params.key}, function(err, foundKey){
-            
-            //if the key hasn't been accessed yet, then set it's dateAccessed property to now
-            if (!foundKey.dateAccessed) {
-                
-            } else {
-                req.flash("invalid url key")
-                res.redirect("back");
-            }
-
-            if (err) {
-                console.log(err);
-                errorHandling.databaseError();
-            } else {
-                //the urlKey exists and it has been less than an hour since the url was last accessed,
-                //then continue
-                if (foundKey && foundKey.dateAccessed + 3600000 > Date.now()) {
-                    res.render("index/register", {showAdminCodeInput: true, showModeratorCodeInput: false, urlKey: req.params.key})
-                } else {
-                    res.send("url key expired");
-                }
-            }
-        });
-
-    } else if(req.params.key.length===15){
-        //this is an moderator code
-        console.log("a moderator is trying to sign up");
-
-        ModeratorCodeUrlKey.findOne({key: req.params.key}, checkKey);
-
-    } else{
-        res.send("invalid url");
-    }
-
-    function checkKey(err, foundKey){
-
-        //if the key hasn't been accessed yet or is false, then set it's dateAccessed property to now
-        if (!foundKey.hasBeenUsed) {
-            foundKey.hasBeenUsed = true;
-        } else {
-            req.flash("invalid url key")
-            res.redirect("back");
-        }
-
-        if (err) {
-            console.log(err);
-            errorHandling.databaseError();
-        } else {
-            if (foundKey && foundKey.hasBeenUsed) {
-                res.render("index/register", {showAdminCodeInput: false, showModeratorCodeInput: true, urlKey: req.params.key});
-            } else {
-                
-                res.send("url key expired");
-            }
-        }
-    }
+router.get("/register/admin", function(req, res){
+    res.render("index/register", {showCodeInput: true});
 });
 
 //find code in database
@@ -101,68 +39,47 @@ router.post("/register", function(req, res){
     //variable to tell checkCodes function what type of permissions to enable
     var typeOfPermissions;
 
-    //if there is a MODERATOR code and no admin code
-    if (req.body.moderatorCode && !req.body.adminCode) {
-        
-        typeOfPermissions = "moderator";
-
-        //find it in the database
-        ModeratorCode.findOne({code: req.body.moderatorCode}, checkCodes);
-        
-    //if there is an ADMIN code and no moderator code
-    } else if(!req.body.moderatorCode && req.body.adminCode){
-
+    //what type of code is this?
+    if (req.body.code.length === 25) {
         typeOfPermissions = "admin";
-
-        //find it in the database
-        AdminCode.findOne({code: req.body.adminCode}, checkCodes);
-
-        //if there is both somehow
+        AdminCode.find({code: req.body.code}, checkCodes);
+    } else if(req.body.code.length === 15){
+        typeOfPermissions = "moderator";
+        ModeratorCode.find({code: req.body.code}, checkCodes);
     } else{
-        req.flash("No Cheating");
-        res.redirect("/home");
+
     }
-    
-        function checkCodes(err, foundCode){
-            if (err) {
-                errorHandling.databaseError();
-                res.redirect("back");
 
-                //check if it doesn't match the urlKey
-            } else if (foundCode.urlKeyUsedWith != req.body.urlKey){
-                req.flash("You gave an invalid code");
-                res.redirect("back");
+    function checkCodes(err, foundCode){
+        if (err) {
+            errorHandling.databaseError();
+            res.redirect("back");
+        } else{ 
+            //has the code been used?
+           if(!foundCode.hasBeenUsed){
 
-                //else, if it does match the key
-            } else if(foundCode.urlKeyUsedWith === req.body.urlKey){
+                //if so, then what type of permissions should we enable?
+                if (typeOfPermissions === "moderator") {
+                    newUser.isModerator = true; 
 
-                //if it hasn't been accessed yet
-                if(!foundCode.dateAccessed){
-                    foundCode.dateAccessed = Date.now();
-                    
-                    //else, if it has been accessed, then is it active?
-                } else if(foundCode.dateAccessed + 3600000 < Date.now()){
-                    
-                    //if so, then what type of permissions should we enable?
-                    if (typeOfPermissions === "moderator") {
-                       newUser.isModerator = true; 
+                    typeOfPermissions = null;
 
-                       typeOfPermissions = null;
+                } else if(typeOfPermissions === "admin"){
 
-                    } else if(typeOfPermissions === "admin"){
+                    newUser.isAdmin = true;
 
-                        newUser.isAdmin = true;
+                    typeOfPermissions = null;
 
-                        typeOfPermissions = null;
-
-                    } else{
-                        req.flash("error", "Something went wrong");
-                        res.redirect("/register");
-                    }
+                } else{
+                    req.flash("error", "Something went wrong");
+                    res.redirect("/register/admin");
                 }
-                
-            } 
-        }
+            } else{
+                req.flash("error", "Sorry, that code has already been used");
+                res.redirect("/register/admin");
+            }
+        } 
+    }
 
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -170,6 +87,11 @@ router.post("/register", function(req, res){
             return res.redirect("back");
         }
         passport.authenticate("local")(req, res, function(){
+            if (user.isAdmin) {
+                req.flash("info", "You are an Admin!");
+            } else if(user.isModerator){
+                req.flash("info", "You are a Moderator!");
+            }
            res.redirect("/home");
         });
     });
