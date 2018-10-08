@@ -1,17 +1,28 @@
 <% include ../partials/header.ejs%>
     <div class = "container">
         
-     <% if (currentUser && post.author.id.equals(currentUser._id) ){ %>
+     <% if (currentUser && post.author.id.equals(currentUser._id) || currentUser.hasElevatedPermissions){ %>
             <div class="card">
-                <h5 class="card-header">Only you, <em><%=post.author.username%></em> can see these controls</h5>
-                
+            
+            <%if(!(currentUser.isAdmin || currentUser.isModerator)){%>
+                <h5 class="card-header">Because you own this post you, <em><%=post.author.username%></em>, can see these controls</h5>
+            <%} else if(currentUser.isAdmin){ %>
+                <h5 class="card-header">You can see these controls because you are an admin</h5>
+            <%} else if(currentUser.isModerator){ %>
+                <h5 class="card-header">You can see these controls because you are a moderator</h5>
+            <%}%>
                 <div class="card-body">
+                    
+                    <%if(post.author.id.equals(currentUser._id) || currentUser.isAdmin){%>
+                        <a href="/posts/<%=post._id%>/edit" class = "btn btn-outline-primary">Edit</a>
+                    <%}%>
 
-                    <a href="/posts/<%=post._id%>/edit" class = "btn btn-outline-primary">Edit</a>
 
-                    <form action = "/posts/<%=post._id%>?_method=DELETE" method = "POST" class = "inline-form">
-                        <input type="submit" value="Delete" class = "btn btn-outline-danger">
-                    </form> 
+                    <%if(post.author.id.equals(currentUser._id) || currentUser.isModerator || currentUser.isAdmin){%>
+                        <form action = "/posts/<%=post._id%>?_method=DELETE" method = "POST" class = "inline-form">
+                            <input type="submit" value="Delete" class = "btn btn-outline-danger">
+                        </form> 
+                    <%}%>
 
                 </div>
             </div>

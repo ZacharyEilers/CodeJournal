@@ -5,7 +5,7 @@ var errorHandling = require("../errorHandling");
 
 var middlewareObj = {};
 
-middlewareObj.checkPostOwnership = function(req, res, next){
+middlewareObj.checkPostOwnershipForEdit = function(req, res, next){
    
    //is the user authenticated?
    if(req.isAuthenticated()){
@@ -17,7 +17,7 @@ middlewareObj.checkPostOwnership = function(req, res, next){
                    res.redirect("back");
                } else{
                    //does the user own the campground?
-                   if(foundPost.author.id.equals(req.user.id)){
+                   if(foundPost.author.id.equals(req.user.id) || req.user.isAdmin){
                         next();
                    } else{
                         res.send("you do not have permission to do that");
@@ -31,6 +31,33 @@ middlewareObj.checkPostOwnership = function(req, res, next){
             res.redirect("back");
        }
 }
+
+middlewareObj.checkPostOwnershipForDelete = function(req, res, next){
+   
+    //is the user authenticated?
+    if(req.isAuthenticated()){
+            
+            //if so, find the post we are trying to modify
+             Post.findById(req.params.id, function(err, foundPost){
+                if (err){
+                   errorHandling.databaseError();
+                    res.redirect("back");
+                } else{
+                    //does the user own the campground?
+                    if(foundPost.author.id.equals(req.user.id) || req.user.isModerator || req.user.isAdmin){
+                         next();
+                    } else{
+                         res.send("you do not have permission to do that");
+                    }
+                }
+             });
+            
+          //if the user is not authenticated
+        } else{
+             req.flash("error", "You must be logged in to do that");
+             res.redirect("back");
+        }
+ }
 
 // middlewareObj.checkCommentOwnership = function(req, res, next){
    

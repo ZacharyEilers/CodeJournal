@@ -150,7 +150,7 @@ router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
 
 
 //SHOW EDIT FORM
-router.get("/posts/:id/edit", function(req, res){
+router.get("/posts/:id/edit", middleware.checkPostOwnershipForEdit, function(req, res){
     Post.findById(req.params.id, function(err, foundPost){
         if (err) {
             console.log(err);
@@ -162,8 +162,8 @@ router.get("/posts/:id/edit", function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/posts/:id", function(req, res){
-    Post.findOneAndUpdate({_id:req.params.id}, middleware.checkPostOwnership, req.body.post, function(err, updatedCampground){
+router.put("/posts/:id", middleware.checkPostOwnershipForEdit, function(req, res){
+    Post.findOneAndUpdate({_id:req.params.id}, req.body.post, function(err, updatedCampground){
         if (err) {
             console.log(err);
         } else {
@@ -174,7 +174,7 @@ router.put("/posts/:id", function(req, res){
 });
 
 //DELETE POST ROUTE
-router.delete("/posts/:id", middleware.checkPostOwnership, function(req, res){
+router.delete("/posts/:id", middleware.checkPostOwnershipForDelete, function(req, res){
     Post.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);

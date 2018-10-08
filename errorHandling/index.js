@@ -3,7 +3,7 @@ var flash = require("connect-flash");
 
 var errorHandlingObj = {};
 
-errorHandlingObj.databaseError = function(){
+errorHandlingObj.databaseError = function(req){
     req.flash("error", "There was an unexpected database error");
 }
 
