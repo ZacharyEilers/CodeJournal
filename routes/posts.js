@@ -71,7 +71,7 @@ router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
         Post.findById(req.params.id).populate("comments").exec(function(err, foundPost){
             if (err) {
                 console.log(err);
-                errorHandling.databaseError()
+                errorHandling.databaseError(req)
                 res.redirect("/home");
             } else {
 

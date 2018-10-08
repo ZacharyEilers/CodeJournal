@@ -13,7 +13,7 @@ middlewareObj.checkPostOwnershipForEdit = function(req, res, next){
            //if so, find the post we are trying to modify
             Post.findById(req.params.id, function(err, foundPost){
                if (err){
-                  errorHandling.databaseError();
+                  errorHandling.databaseError(req);
                    res.redirect("back");
                } else{
                    //does the user own the campground?
@@ -40,7 +40,7 @@ middlewareObj.checkPostOwnershipForDelete = function(req, res, next){
             //if so, find the post we are trying to modify
              Post.findById(req.params.id, function(err, foundPost){
                 if (err){
-                   errorHandling.databaseError();
+                   errorHandling.databaseError(req);
                     res.redirect("back");
                 } else{
                     //does the user own the campground?

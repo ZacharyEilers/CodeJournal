@@ -17,6 +17,7 @@ seeds.seedDBWithCodes();
     var postRoutes  = require("./routes/posts.js");
     var indexRoutes = require("./routes/index.js");
     var likeAndCommentRoutes = require("./routes/likesAndComments.js");
+    var adminRoutes = require("./routes/admin.js");
 
 
 //MODELS
@@ -61,6 +62,7 @@ app.use(function(req, res, next){
 app.use("/", postRoutes);
 app.use("/", indexRoutes);
 app.use("/", likeAndCommentRoutes);
+app.use("/", adminRoutes);
 
 if (process.env.PORT && process.env.IP){
 
