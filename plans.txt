@@ -1,0 +1,30 @@
+Oct 12
+    add journals
+        create the journals model
+        add routes and ui to create a journal, delete, and view a journal, editing a journal = editing posts inside
+    
+    revamp the home screen so that it shows journals and a recent feed with recently updated journals
+        all updated journals should be shown but eventually it will only be followed journals
+        
+        
+users create
+        journals
+            posts - can be tips, updates, tutorials, etc.
+                likes
+                comments - rich text w/ code and formatting
+                
+users can follow
+            other users
+            journals
+        
+        and get shown new posts from journals they follow in a feed
+        get reminded of journals they have seen that become popular
+        
+    users can get recommended tutorials based on their learning progress
+        users can set what they are learning and what they want to learn in their profile and get recommended
+        tutorials that fit those topics
+        
+
+        
+    
+        
