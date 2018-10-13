@@ -23,7 +23,13 @@ users can follow
     users can get recommended tutorials based on their learning progress
         users can set what they are learning and what they want to learn in their profile and get recommended
         tutorials that fit those topics
+
+users can explore journals and topics with tutorials in those topics
+
+the site should be a collection of user-recommended and created tutorials that are tailored to meet the users' needs
+it should be searchable and sorted by topics as well as explorable
         
+create link in navbar should go to page with selector for adding a post in a which journal the user desires
 
         
     
