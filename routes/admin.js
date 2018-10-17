@@ -1,7 +1,7 @@
 var express     = require("express"),
     router      = express.Router(),
     passport    = require("passport"),
-    errorHandling = require("../errorHandling");
+    errorHandling = require("../errorHandling"),
     User        = require("../models/user.js"),
     AdminCode   = require("../models/adminModeratorModels/adminCode.js"),
     ModeratorCode = require("../models/adminModeratorModels/moderatorCode.js");

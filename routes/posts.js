@@ -20,7 +20,7 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                res.render("posts/home", {posts: searchedPosts}); 
+                res.render("index/home", {posts: searchedPosts}); 
             }
         });
     } else {
@@ -28,7 +28,7 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                res.render("posts/home", {posts:foundPosts});
+                res.render("index/home", {posts:foundPosts});
             }
         });
     }
@@ -184,6 +184,34 @@ router.delete("/posts/:id", middleware.checkPostOwnershipForDelete, function(req
         }
     })
 });
+
+//SHOW EXPLORE ROUTE
+router.get("/explore", middleware.isLoggedIn, function(req, res){
+
+    if (req.query.search) {
+
+        //TODO: add some sort of ranking algorithm here and clean up the form, maybe create a results page
+
+        const regex  = new RegExp(escapeRegex(req.query.search), 'gi');
+
+        Post.find({$or:[{title: regex, qty: 50},{body:regex, qty: 10},{'author.username': regex, qty: 40}]}, function(err, searchedPosts){
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("posts/explore", {posts: searchedPosts}); 
+            }
+        });
+    } else {
+        Post.find({}, function(err, foundPosts){
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("posts/explore", {posts:foundPosts});
+            }
+        });
+    }
+});
+
 
 function escapeRegex(text){
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
