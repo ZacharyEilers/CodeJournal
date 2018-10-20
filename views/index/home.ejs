@@ -24,72 +24,31 @@
                     Journals
                 </h2>
 
+               <% journals.forEach(function(journal){ %>
                 <p>
-                  <button class="btn btn-dark btn-block btn-lg" type="button" data-toggle="collapse" data-target=".journal-01" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">React <i class="fas fa-angle-down"></i></button>
-                </p>
-                <div class="row">
-
-                  <div class="col col-xs-12 col-md-6">
-                    <div class="collapse journal-01" id="multiCollapseExample2">
-                        <div class="card">
-                          <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
-                          <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-
-                  <div class="col col-xs-12 col-md-6">
-                    <div class="collapse journal-01" id="multiCollapseExample2">
-                        <div class="card">
-                          <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
-                          <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-             
-                <p>
-                  <button class="btn btn-dark btn-block btn-lg" type="button" data-toggle="collapse" data-target=".journal-02" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Angular <i class="fas fa-angle-down"></i></button>
-                </p>
-                <div class="row">
-
+                    <button class="btn btn-dark btn-block btn-lg" type="button" data-toggle="collapse" data-target=".journal-01" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">React <i class="fas fa-angle-down"></i></button>
+                  </p>
+                  <div class="row">
+                  <% if (journal.posts.length >= 2){ %>
+                  <% for(var i = 0; i<2; i++){ %>
                     <div class="col col-xs-12 col-md-6">
-                      <div class="collapse journal-02" id="multiCollapseExample2">
-                          <div class="card">
-                            <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <div class="collapse journal-01" id="multiCollapseExample2">
+                            <div class="card">
+                                <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%=journal.posts[i].title%></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted"><%=posts[i].author.username%></h6>
+                                        <p class="card-text"><%-journal.posts[i].body.substring(0, 100)%></p>
+                                        <a href="/posts/<%=posts[i]._id%>" class="btn btn-primary">View</a>
+                                    </div>
                             </div>
-                          </div>
                       </div>
                     </div>
-  
-                    <div class="col col-xs-12 col-md-6">
-                      <div class="collapse journal-02" id="multiCollapseExample2">
-                          <div class="card">
-                            <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-
+                  <% } %>
+                  <% } %>
                   </div>
-                  
-                </div>
-
+                <% }) %>
               </div>
+
+            </div>
 <% include ../partials/footer.ejs%>

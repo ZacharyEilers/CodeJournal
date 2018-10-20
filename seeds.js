@@ -4,6 +4,8 @@ var AdminCode   = require("./models/adminModeratorModels/adminCode.js"),
 
 var Post = require("./models/post.js");
 var faker = require("faker");
+
+var Journal = require("./models/journal.js");
     
 var seedsObj = {};
 
@@ -66,6 +68,38 @@ seedsObj.seedDBWithPosts = function(req, numPosts = 10){
     }
 
     console.log(numPosts + " posts successfully created");
+}
+
+seedsObj.seedDBWithJournalsAndPosts = function(req, callback){
+
+    Journal.deleteMany({}, function(err){
+        if(err){
+            console.log(err);
+        } else{
+
+            var title = faker.name.title();
+            var desc = faker.lorem.paragraph();
+
+            var author = {
+                id: req.user._id,
+                username: req.user.username
+            };
+
+            var newJournal = {title: title, description: desc, author:req.user, posts: []};
+
+            Journal.create(newJournal, function(err){
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Journal created successfully: "+newJournal.title);
+                    
+                    callback();
+                }
+            });
+
+        }
+    });
+
 }
 
 

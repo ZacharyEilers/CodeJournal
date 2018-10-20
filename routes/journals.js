@@ -28,7 +28,6 @@ router.post("/journals/create", middleware.isLoggedIn, function(req, res){
     });
 });
 
-
 router.get("/journals", function(req, res){
     req.flash("Your journals are right here!");
     res.redirect("/home");

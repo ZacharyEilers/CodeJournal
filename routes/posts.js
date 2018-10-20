@@ -5,18 +5,73 @@ var express     = require("express"),
 
 var Post = require("../models/post.js");
 var Comment = require("../models/comment.js");
+var Journal = require("../models/journal.js");
+
+var cTable = require('console.table');
+var seeds = require("../seeds.js");
 
 
 
 //HOME
 router.get("/home", middleware.isLoggedIn, function(req, res){
-        Post.find({author:req.user}, function(err, foundPosts){
+
+    console.log("home route hit");
+
+
+    function showHome(){
+
+        Journal.find({}, function(err, foundJournals){
             if (err) {
-                console.log(err);
+                console.log(error);
+                errorHandling.databaseError(req);
             } else {
-                res.render("index/home", {posts:foundPosts});
+                console.log("found some journals "+foundJournals.length);
+    
+                foundJournals.forEach(function(journal){
+                    console.log("journal found: "+ journal.title);
+                });
+    
+                var numUserJournals = foundJournals.length;
+    
+                var journalsReady = [];
+    
+                if (foundJournals.length === 0) {
+                    res.render("index/home", {journals: journalsReady, noJournals: true});
+                } else{
+                    foundJournals.forEach(function(journal){
+                        Journal.findById(journal._id).populate("posts").exec(function(err, populatedJournal){
+                            if (err) {
+                                console.log(err);
+                                errorHandling.databaseError(req);
+                            } else {
+                                journalsReady.push(populatedJournal);
+                            }
+                        });
+                        
+                        if(numUserJournals === journalsReady.length){
+                            res.render("index/home", {journals: journalsReady});
+                        }
+                    });
+                }
+                
+                // Post.find({'author.username': req.user.username}, function(err, foundPosts){
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                        
+                //     }
+                // });
+    
             }
         });
+
+        console.log("show home executed");
+
+    }
+
+    seeds.seedDBWithJournalsAndPosts(req, showHome);
+
+    
 });
 
 //CREATE POST
