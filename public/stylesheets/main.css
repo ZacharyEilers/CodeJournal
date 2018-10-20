@@ -13,6 +13,16 @@
     display: inline;
 }
 #searchBox{
-    width:90%;
+    width:50%;
     margin-right: 10px;
+}
+#numResultsBox{
+    width:20%;
+    margin-right: 10px;
+}
+#searchForm{
+    max-width:99%;
+}
+#backButton{
+    margin-left: 10px;
 }
