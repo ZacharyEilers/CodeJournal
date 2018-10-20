@@ -187,7 +187,7 @@ router.delete("/posts/:id", middleware.checkPostOwnershipForDelete, function(req
 
 //SHOW EXPLORE ROUTE
 router.get("/explore", middleware.isLoggedIn, function(req, res){
-
+    
     if (req.query.search) {
 
         //TODO: add some sort of ranking algorithm here and clean up the form, maybe create a results page

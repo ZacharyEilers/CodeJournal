@@ -12,3 +12,7 @@
 .inline-form{
     display: inline;
 }
+#searchBox{
+    width:90%;
+    margin-right: 10px;
+}
