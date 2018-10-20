@@ -6,15 +6,17 @@ var express     = require("express"),
 var Post = require("../models/post.js");
 var Comment = require("../models/comment.js");
 
-
 //HOME PAGE - SHOW ALL POSTS
 router.get("/home", middleware.isLoggedIn, function(req, res){
+
 
     if (req.query.search) {
 
         //TODO: add some sort of ranking algorithm here and clean up the form, maybe create a results page
 
         const regex  = new RegExp(escapeRegex(req.query.search), 'gi');
+
+        console.log(regex);
 
         Post.find({$or:[{title: regex},{body:regex},{'author.username': regex}]}, function(err, searchedPosts){
             if (err) {
@@ -189,10 +191,11 @@ router.delete("/posts/:id", middleware.checkPostOwnershipForDelete, function(req
 router.get("/explore", middleware.isLoggedIn, function(req, res){
     
     if (req.query.search) {
-
+        console.log(req.query.search + " exists");
         //TODO: add some sort of ranking algorithm here and clean up the form, maybe create a results page
 
-        const regex  = new RegExp(escapeRegex(req.query.search), 'gi');
+        const regex  = new RegExp(escapeRegex(req.query.search));
+        console.log(regex);
 
         Post.find({$or:[{title: regex, qty: 50},{body:regex, qty: 10},{'author.username': regex, qty: 40}]}, function(err, searchedPosts){
             if (err) {

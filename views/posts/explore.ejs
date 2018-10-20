@@ -8,19 +8,7 @@
                     <input type="text" class="form-control" id="searchBox" placeholder="Search Query" name = "search">
                     <button class = "btn btn-primary">Search</button>
             </form>
-            
-        <!--    <% posts.forEach(function(post){ %>-->
-        <!--        <div class="card">-->
-        <!--            <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">-->
-        <!--                <div class="card-body">-->
-        <!--                    <h5 class="card-title"><%=post.title%></h5>-->
-        <!--                    <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>-->
-        <!--                    <p class="card-text"><%-post.body.substring(0,100)%></p>-->
-        <!--                    <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>-->
-        <!--                </div>-->
-        <!--        </div>-->
-        <!--    <% })%>-->
-        <!--</div>-->
+
         
         <div class="card-columns">
             <%posts.forEach(function(post){%>
@@ -29,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><%=post.title%></h5>
                         <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>
-                        <p class="card-text"><%-post.body.substring(0,100)%></p>
+                        <p class="card-text"><%-post.body.substring(0, 100)%></p>
                         <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
                     </div>
                 </div>

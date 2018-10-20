@@ -2,7 +2,9 @@ var express     = require("express"),
     router      = express.Router(),
     passport    = require("passport"),
     errorHandling = require("../errorHandling");
-    User        = require("../models/user.js"),
+    User        = require("../models/user.js");
+
+var seeds = require("../seeds.js");
     
 //root route
 router.get("/", function(req, res){
@@ -29,6 +31,7 @@ router.post("/login", passport.authenticate("local",
         failureRedirect: "/login",
         failureFlash: "Your password or username was incorrect",
     }), function(req, res){
+        seeds.seedDBWithPosts(req, 20);
 });
 
 // logout route
