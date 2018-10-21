@@ -30,11 +30,11 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
                 foundJournals.forEach(function(journal){
                     console.log("journal found: "+ journal.title);
                 });
-    
+     
                 var numUserJournals = foundJournals.length;
     
                 var journalsReady = [];
-    
+               
                 if (foundJournals.length === 0) {
                     res.render("index/home", {journals: journalsReady, noJournals: true});
                 } else{
@@ -45,12 +45,15 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
                                 errorHandling.databaseError(req);
                             } else {
                                 journalsReady.push(populatedJournal);
+
+                                if(numUserJournals === journalsReady.length){
+                                    eval(require('locus'));
+                                    res.render("index/home", {journals: journalsReady});
+                                } else{
+                                    //res.send("INTERNAL SERVER ERROR");
+                                }
                             }
                         });
-                        
-                        if(numUserJournals === journalsReady.length){
-                            res.render("index/home", {journals: journalsReady});
-                        }
                     });
                 }
                 

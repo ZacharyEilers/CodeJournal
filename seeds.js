@@ -92,8 +92,27 @@ seedsObj.seedDBWithJournalsAndPosts = function(req, callback){
                     console.log(err);
                 } else {
                     console.log("Journal created successfully: "+newJournal.title);
+
+                    var newPost = {title: faker.name.title(), body: faker.lorem.paragraph(), author: author}
+
                     
-                    callback();
+                        Post.create(newPost, function(err, createdPost){
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                newJournal.posts.push(createdPost);
+                                
+                                Journal.findByIdAndUpdate(newJournal._id, newJournal, function(err, updatedJournal){
+                                    if (err) {
+                                        console.log(err);
+                                    } else {     
+                                        eval(require('locus'));
+                                        callback();
+                                    }
+                                });
+                            }
+                        });
+
                 }
             });
 
