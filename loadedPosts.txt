@@ -1,0 +1,4 @@
+<h5 class="card-title"><%=journal.posts[i].title%></h5>
+<h6 class="card-subtitle mb-2 text-muted"><%=journal.posts[i].author.username%></h6>
+<p class="card-text"><%-journal.posts[i].body.substring(0, 100)%></p>
+<a href="/posts/<%=journal.posts[i]._id%>" class="btn btn-primary">View</a>

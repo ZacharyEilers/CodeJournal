@@ -5,8 +5,11 @@ var journalSchema = new mongoose.Schema({
    description: String,
    topic: String,
    author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+       id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+       },
+       username: String
    },
    followers: [
        {

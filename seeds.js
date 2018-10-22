@@ -102,11 +102,11 @@ seedsObj.seedDBWithJournalsAndPosts = function(req, callback){
                             } else {
                                 newJournal.posts.push(createdPost);
                                 
-                                Journal.findByIdAndUpdate(newJournal._id, newJournal, function(err, updatedJournal){
+                                Journal.findOneAndUpdate(newJournal._id, newJournal, {new: true}, function(err, updatedJournal){
                                     if (err) {
                                         console.log(err);
                                     } else {     
-                                        eval(require('locus'));
+                                        eval(require("locus"));
                                         callback();
                                     }
                                 });

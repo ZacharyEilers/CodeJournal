@@ -29,22 +29,20 @@
                     <button class="btn btn-dark btn-block btn-lg" type="button" data-toggle="collapse" data-target=".journal-01" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">React <i class="fas fa-angle-down"></i></button>
                   </p>
                   <div class="row">
-                  <% if (journal.posts.length >= 2){ %>
-                  <% for(var i = 0; i<2; i++){ %>
-                    <div class="col col-xs-12 col-md-6">
-                      <div class="collapse journal-01" id="multiCollapseExample2">
-                            <div class="card">
-                                <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%=journal.posts[i].title%></h5>
-                                        <h6 class="card-subtitle mb-2 text-muted"><%=posts[i].author.username%></h6>
-                                        <p class="card-text"><%-journal.posts[i].body.substring(0, 100)%></p>
-                                        <a href="/posts/<%=posts[i]._id%>" class="btn btn-primary">View</a>
-                                    </div>
-                            </div>
-                      </div>
-                    </div>
-                  <% } %>
+                  <% if (journal.posts.length >= 1){ %>
+                      <% for(var i = 0; i<2; i++){ %>
+                        <div class="col col-xs-12 col-md-6">
+                          <div class="collapse journal-01" id="multiCollapseExample2">
+                                <div class="card">
+                                    <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+                                        <div class="card-body">
+
+                                            
+                                        </div>
+                                </div>
+                          </div>
+                        </div>
+                      <% } %>
                   <% } %>
                   </div>
                 <% }) %>

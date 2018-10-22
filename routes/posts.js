@@ -20,9 +20,9 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 
     function showHome(){
 
-        Journal.find({}, function(err, foundJournals){
+        Journal.find({'author.username': req.user.username}, function(err, foundJournals){
             if (err) {
-                console.log(error);
+                console.log(err);
                 errorHandling.databaseError(req);
             } else {
                 console.log("found some journals "+foundJournals.length);
@@ -47,7 +47,16 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
                                 journalsReady.push(populatedJournal);
 
                                 if(numUserJournals === journalsReady.length){
-                                    eval(require('locus'));
+                                    
+                                    journalsReady.forEach(function(journal){
+                                       for(var i = 0; i<2; i++){
+                                       
+                                           console.log(journal.posts);
+                                       }
+                                    });
+                                    
+                                    eval(require("locus"));
+                                    
                                     res.render("index/home", {journals: journalsReady});
                                 } else{
                                     //res.send("INTERNAL SERVER ERROR");
