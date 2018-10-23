@@ -48,14 +48,15 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 
                                 if(numUserJournals === journalsReady.length){
                                     
-                                    journalsReady.forEach(function(journal){
-                                       for(var i = 0; i<2; i++){
-                                       
-                                           console.log(journal.posts);
-                                       }
-                                    });
+                                    //eval(require('locus'));
+
+                                    // journalsReady.forEach(function(journal){
+                                    //    for(var i = 0; i<2; i++){
+                                    //        console.log("Journal post "+ i + " title " + journal.posts[i].title);
+                                    //    }
+                                    // });
                                     
-                                    eval(require("locus"));
+                                    //eval(require("locus"));
                                     
                                     res.render("index/home", {journals: journalsReady});
                                 } else{
@@ -81,8 +82,8 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 
     }
 
-    seeds.seedDBWithJournalsAndPosts(req, showHome);
-
+    //seeds.seedDBWithJournalsAndPosts(req, showHome);
+    showHome();
     
 });
 

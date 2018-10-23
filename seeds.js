@@ -106,7 +106,7 @@ seedsObj.seedDBWithJournalsAndPosts = function(req, callback){
                                     if (err) {
                                         console.log(err);
                                     } else {     
-                                        eval(require("locus"));
+                                        //eval(require("locus"));
                                         callback();
                                     }
                                 });
