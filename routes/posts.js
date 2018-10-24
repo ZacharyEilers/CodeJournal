@@ -90,12 +90,12 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 //CREATE POST
 
 //GET CREATE FORM
-router.get("/posts/create", middleware.isLoggedIn, function(req, res){
-    res.render("posts/create");
+router.get("/journals/:id/create", middleware.isLoggedIn, function(req, res){
+    res.render("posts/create", {id: req.params.id});
 });
 
 //POST TO CREATE ROUTE
-router.post("/posts/create", middleware.isLoggedIn, function(req, res){
+router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
     var title = req.body.title;
     var body = req.sanitize(req.body.body);
     
@@ -105,15 +105,40 @@ router.post("/posts/create", middleware.isLoggedIn, function(req, res){
     };
     
     var newPost = {title: title, body: body, author: author};
-
+    
+    
+    function updateJournal(newlyCreated){
+    //lets update the journal
+        Journal.findById(req.params.id, function(err, foundJournal) {
+            if (err) {
+                console.log(err);
+                errorHandling.databaseError(req);
+            } else {
+            //found the journal
+            //lets update it so that it contains this post
+            
+                foundJournal.posts.push(newlyCreated);
+            
+                Journal.findByIdAndUpdate(req.params.id, foundJournal, function(err, foundJournal){
+                   if (err) {
+                       console.log(err);
+                       errorHandling.databaseError(req);
+                   } else {
+                       req.flash("success", "Post successfully created: " + foundJournal.posts[foundJournal.posts.length-1].title); 
+                       res.redirect("/home");
+                   }
+                });
+            }
+        });
+    }
+    
     Post.create(newPost, function(error, newlyCreated){
         if (error){
             console.log(error);
         } else{
-            req.flash("success", "Post successfully created");
-            res.redirect("/home");
+            updateJournal(newlyCreated);
         }
-    })
+    });
 });
 
 

@@ -21,24 +21,37 @@
             <h1 class = "text-center">Home</h1>
                 
                 <h2 class = "text-left">Journals</h2>
-
-               <% journals.forEach(function(journal){ %>
+                <% journals.forEach(function(journal){ %>
                   <p>
                     <button class="btn btn-dark btn-block btn-lg journal-expand" type="button" data-toggle="collapse" data-target=".journal-01" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><%=journal.title%> <i class="fas fa-angle-down"></i></button>
                   </p>
                   <div class="row">
-                  <button class = "btn btn-outline-primary btn-block journal-01 collapse journal-create-button">Create a Post in <em><%=journal.title%></em> <i class="fas fa-angle-right"></i></button>
-                  <% if (journal.posts.length >= 1){ %>
-                      <% for(var i = 0; i<2; i++){ %>
+                      <div class = "row">
+                            <div class = "col-6 col-md-3">
+                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class = "col-6 col-md-3">
+                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class = "col-6 col-md-3">
+                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class = "col-6 col-md-3">
+                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
+                            </div>
+                      </div>
+                  
+                  <% if (journal.posts.length >= 2){ %>
+                      <% for(var i = journal.posts.length-1; i>=journal.posts.length-2; i--){ %>
                         <div class="col col-12 col-md-6">
                           <div class="collapse journal-01" id="multiCollapseExample2">
                                 <div class="card">
                                     <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
                                         <div class="card-body">
-                                            <h5 class="card-title"><%=journal.posts[0].title%></h5>
-                                            <h6 class="card-subtitle mb-2 text-muted"><%=journal.posts[0].author.username%></h6>
-                                            <p class="card-text"><%-journal.posts[0].body.substring(0, 100)%></p>
-                                            <a href="/posts/<%=journal.posts[0]._id%>" class="btn btn-primary">View</a>
+                                            <h5 class="card-title"><%=journal.posts[i].title%></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted"><%=journal.posts[i].author.username%></h6>
+                                            <p class="card-text"><%-journal.posts[i].body.substring(0, 100)%></p>
+                                            <a href="/posts/<%=journal.posts[i]._id%>" class="btn btn-primary">View</a>
                                         </div>
                                 </div>
                           </div>
