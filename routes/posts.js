@@ -29,6 +29,7 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
     
                 foundJournals.forEach(function(journal){
                     console.log("journal found: "+ journal.title);
+                    // eval(require("locus"));
                 });
      
                 var numUserJournals = foundJournals.length;

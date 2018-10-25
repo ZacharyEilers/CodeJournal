@@ -1,0 +1,22 @@
+<% include ../partials/header.ejs%>
+
+    <div class = "container">
+            
+        <h1 class = "text-left">All Posts in <%=journal.title%></h1>
+
+        <div class="card-columns">
+            <%journal.posts.forEach(function(post){%>
+                <div class="card">
+                <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=post.title%></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>
+                        <p class="card-text"><%-post.body.substring(0, 100)%></p>
+                        <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            <%})%>
+        </div>
+        
+    </div>
+<% include ../partials/footer.ejs%>

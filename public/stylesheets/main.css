@@ -29,3 +29,14 @@
 .journal-expand{
     width: 100%;
 }
+.journal-crud-button{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.form{
+    margin:auto;
+    max-width:800px;    
+}
+.journalDeleteForm{
+    margin-top: 40px;
+}

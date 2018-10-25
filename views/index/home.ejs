@@ -26,20 +26,11 @@
                     <button class="btn btn-dark btn-block btn-lg journal-expand" type="button" data-toggle="collapse" data-target=".journal-01" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><%=journal.title%> <i class="fas fa-angle-down"></i></button>
                   </p>
                   <div class="row">
-                      <div class = "row">
-                            <div class = "col-6 col-md-3">
-                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
-                            </div>
-                            <div class = "col-6 col-md-3">
-                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
-                            </div>
-                            <div class = "col-6 col-md-3">
-                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
-                            </div>
-                            <div class = "col-6 col-md-3">
-                                <a href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse">Create Post <i class="fas fa-angle-right"></i></a>
-                            </div>
-                      </div>
+                      <!-- <div class = "row"> -->
+                            <div class = "col-12 col-md-4"><a role = "button" href = "/journals/<%=journal._id%>/create" class = "btn btn-outline-primary journal-01 collapse journal-crud-button">Create Post <i class="fas fa-plus"></i></a></div>
+                            <div class = "col-12 col-md-4"><a role = "button" href = "/journals/<%=journal._id%>/" class = "btn btn-outline-secondary journal-01 collapse journal-crud-button">View all posts <i class="fas fa-angle-right"></i></a></div>
+                            <div class = "col-12 col-md-4"><a role = "button" href = "/journals/<%=journal._id%>/edit" class = "btn btn-outline-warning journal-01 collapse journal-crud-button">Edit Journal Details <i class="fas fa-pen"></i></a></div>
+                      <!-- </div> -->
                   
                   <% if (journal.posts.length >= 2){ %>
                       <% for(var i = journal.posts.length-1; i>=journal.posts.length-2; i--){ %>

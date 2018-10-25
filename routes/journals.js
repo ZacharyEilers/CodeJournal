@@ -33,6 +33,42 @@ router.get("/journals", function(req, res){
     res.redirect("/home");
 });
 
+//GET EDIT FORM ROUTE
+router.get("/journals/:id/edit", function(req, res){
+    Journal.findById(req.params.id, function(err, foundJournal){
+        if (err) {
+            console.log(err);
+            errorHandling.databaseError(req);
+        } else {
+            res.render("journals/edit", {journal: foundJournal});
+        }
+    });
+});
+
+//UPDATE ROUTE
+router.put("/journals/:id", function(req, res){
+    Journal.findByIdAndUpdate(req.params.id, {$set: req.body.journal}, {new: true}, function(err, updatedJournal){
+        if (err) {
+            console.log(err);
+            errorHandling.databaseError(req);
+        } else {
+            req.flash("success", "The Journal "+ updatedJournal.title + " has been successfully updated!");
+            res.redirect("/home");
+        }
+    });
+});
+
+router.get("/journals/:id", function(req, res){
+    Journal.findById(req.params.id).populate("posts").exec(function(err, foundJournal){
+        if (err) {
+            console.log(err);
+            errorHandling.databaseError(req);
+        } else {
+            res.render("journals/show", {journal: foundJournal});
+        }
+    });
+});
+
 
 
 
