@@ -10,6 +10,7 @@ var postSchema = new mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId,
        ref: "Journal"
    },
+   codepenUrl: String,
    hasViewed: [
        {
            type: mongoose.Schema.Types.ObjectId,

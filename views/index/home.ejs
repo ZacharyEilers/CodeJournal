@@ -24,7 +24,7 @@
                 <% journals.forEach(function(journal, index){ %>
                   <div class = "journal">
                     <p>
-                      <button class="btn btn-dark btn-block btn-lg journal-expand" type="button" data-toggle="collapse" data-target=".journal-<%=index%>" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><%=journal.title%> <i class="fas fa-angle-down"></i></button>
+                      <button class="btn btn-dark btn-block btn-lg journal-expand" data-collapse=".journal-<%=index%>" type="button" data-toggle="collapse" data-target=".journal-<%=index%>" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"><%=journal.title%> <i class="fas fa-angle-down"></i></button>
                     </p>
                     <div class="row">
                         
@@ -69,15 +69,26 @@
               </div>
             </div>
 
-            <script>
-              $('.journal-expand').on("mouseover", function(event){
-                $('.journal-0').collapse('show');
-                event.stopPropagation();
-              });
+            <!--<script>-->
+            
+            <!--    var target;-->
+            <!--  $('.journal-expand').on("mouseover", function(event){-->
+                  
+                <!--var dataTargetAttr = $(this).attr("data-target");-->
+                  
+                <!--console.log(dataTargetAttr);-->
+                  
+                <!--target = dataTargetAttr.substring(9); -->
+                <!--console.log(target);-->
+                
+                
+            <!--    $('.journal-0').collapse('show');-->
+            <!--    event.stopPropagation();-->
+            <!--  });-->
 
-              $('.journal').on("mouseleave", function(event){
-                $('.journal-0').collapse('hide');
-                event.stopPropagation();
-              });
-            </script>
+            <!--  $('.journal').on("mouseleave", function(event){-->
+            <!--    $('.journal-0').collapse('hide');-->
+            <!--    event.stopPropagation();-->
+            <!--  });-->
+            <!--</script>-->
 <% include ../partials/footer.ejs%>

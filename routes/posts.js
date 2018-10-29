@@ -107,7 +107,9 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
         username: req.user.username,
     };
     
-    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id};
+    console.log(req.body.codepenUrl);
+    
+    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id, codePenUrl: req.body.codepenUrl};
     
     
     function updateJournal(newlyCreated){
@@ -127,7 +129,7 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
                        console.log(err);
                        errorHandling.databaseError(req);
                    } else {
-                       req.flash("success", "Post successfully created: " + foundJournal.posts[foundJournal.posts.length-1].title); 
+                       req.flash("success", "Post successfully created: " + title); 
                        res.redirect("/home");
                    }
                 });

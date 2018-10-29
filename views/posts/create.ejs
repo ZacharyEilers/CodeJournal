@@ -4,15 +4,22 @@
     <form action = "/journals/<%=id%>/create" method = "POST">
         <div class="form-group">
             <label for="nameInput">Title</label>
-            <input name = "title" type="text" class="form-control" id="nameInput" placeholder="Make a flashy headline">
+            <input name = "title" type="text" class="form-control" id="nameInput" placeholder="Make a flashy headline" required>
         </div>
 
 
         <div class="form-group">
             <label for="bodyInput">Body</label>
-            <textarea name = "body" class="form-control" id="bodyInput" placeholder = "The meat of your new post" rows="6"></textarea>
+            <textarea name = "body" class="form-control" id="bodyInput" placeholder = "The meat of your new post" rows="6" required></textarea>
         </div>
-
+        
+        <div class="form-group">
+            <label for="bodyInput">Codepen Project Url</label>
+            <input name = "codepenUrl" class="form-control" id="bodyInput" placeholder = "The meat of your new post"></input>
+            <small class = "form-text text-muted">Optional</small>
+        </div>
+        
+        
         <button type="submit" class="btn btn-primary">Submit</button>
 
     </form>
