@@ -9,7 +9,7 @@
                     <input type="number" step = "1" min = "1" value = "10" max = "100" class="form-control" id="numResultsBox" placeholder="Number of results" name = "limit">
                     <button class = "btn btn-primary">Search</button>
                     <%if(showBackButton){%>
-                        <a class="btn btn-dark" href = "/explore" id = "backButton"><i class="fas fa-angle-left"></i>Back</a>
+                        <a class="btn btn-dark" href = "/explore" id = "backButton"><i class="fas fa-angle-left"></i> Back</a>
                     <%}%>
             </form>
 
@@ -23,6 +23,9 @@
                         <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>
                         <p class="card-text"><%-post.body.substring(0, 100)%></p>
                         <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
+                    </div>
+                    <div class="card-footer">
+                        Part of the journal <em><%=post.partOfJournal.title%></em> by <em><%=post.partOfJournal.author.username%></em>
                     </div>
                 </div>
             <%})%>

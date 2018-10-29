@@ -6,6 +6,10 @@ var postSchema = new mongoose.Schema({
    likes: {type: Number, default: 0},
    totalImpressions: {type: Number, default: 0},
    uniqueImpressions: {type: Number, default: 0},
+   partOfJournal: {
+       type: mongoose.Schema.Types.ObjectId,
+       ref: "Journal"
+   },
    hasViewed: [
        {
            type: mongoose.Schema.Types.ObjectId,

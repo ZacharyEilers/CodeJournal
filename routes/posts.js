@@ -10,6 +10,8 @@ var Journal = require("../models/journal.js");
 var cTable = require('console.table');
 var seeds = require("../seeds.js");
 
+var locus = require('locus');
+
 
 
 //HOME
@@ -105,7 +107,7 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
         username: req.user.username,
     };
     
-    var newPost = {title: title, body: body, author: author};
+    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id};
     
     
     function updateJournal(newlyCreated){
@@ -120,7 +122,7 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
             
                 foundJournal.posts.push(newlyCreated);
             
-                Journal.findByIdAndUpdate(req.params.id, foundJournal, function(err, foundJournal){
+                Journal.findByIdAndUpdate(req.params.id, foundJournal).populate("posts").exec(function(err, foundJournal){
                    if (err) {
                        console.log(err);
                        errorHandling.databaseError(req);
@@ -280,7 +282,8 @@ router.get("/explore", middleware.isLoggedIn, function(req, res){
             }
         });
     } else {
-        Post.find({}, function(err, foundPosts){
+        //there was no query, just show the page as normal
+        Post.find({}).populate("partOfJournal").exec(function(err, foundPosts){
             if (err) {
                 console.log(err);
             } else {
