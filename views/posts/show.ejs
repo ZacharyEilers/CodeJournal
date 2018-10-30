@@ -87,8 +87,9 @@
 
                             <p class="card-text"><%-post.body%></p>
                             
-                            
-                            <div>CODEPEN GOES HERE</div>
+                            <% if(post.codepenUrl){ %>
+                                <div id = "codepen" data-url = "<%=post.codepenUrl%>">Loading Codepen...</div>
+                            <% } %>
                         </div>
 
                         </div>
@@ -127,5 +128,23 @@
                 </div>
             </div>
     </div>
+
+    <script>
+        var codepenElem = $('#codepen');
+        if(codepenElem){
+            //load the codepen
+            var codepenUrl = codepenElem.attr("data-url");
+           // var myHeaders = new Headers();
+
+            // fetch("https://codepen.io/api/oembed?url="+codepenUrl+"&format=json",{
+            //     mode: 'no-cors'
+            // }
+            // ).then(function(response) {
+            //     return response.json();
+            // }).then(function(myJson){
+            //     console.log(myJson);
+            // });
+        }
+    </script>
 
 <% include ../partials/footer.ejs%>

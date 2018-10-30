@@ -107,9 +107,9 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
         username: req.user.username,
     };
     
-    console.log(req.body.codepenUrl);
+    console.log("Codepen URL: "+req.body.codepenUrl);
     
-    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id, codePenUrl: req.body.codepenUrl};
+    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id, codepenUrl: req.body.codepenUrl};
     
     
     function updateJournal(newlyCreated){
@@ -123,6 +123,7 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
             //lets update it so that it contains this post
             
                 foundJournal.posts.push(newlyCreated);
+                foundJournal.lastUpdated = Date.now();
             
                 Journal.findByIdAndUpdate(req.params.id, foundJournal).populate("posts").exec(function(err, foundJournal){
                    if (err) {
@@ -214,6 +215,7 @@ router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
                         console.log(error);
                     } else {
                         //continue, and render the show page
+                        console.log(newPost.codepenUrl);
 
                          //if user hasn't liked the post
                         if(userHasNotLikedPost){
