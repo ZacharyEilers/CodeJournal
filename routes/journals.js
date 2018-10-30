@@ -69,6 +69,41 @@ router.get("/journals/:id", function(req, res){
     });
 });
 
+router.delete("/journals/:id", function(req, res){
+    Journal.findById(req.params.id, function(err, foundJournal){
+        if (err) {
+            console.log(err);
+            errorHandling.databaseError(req);
+        } else {
+
+            var postsDeleted = 0;
+
+            foundJournal.posts.forEach(function(postID){
+                Post.findByIdAndDelete(postID, function(err){
+                    if (err) {
+                        console.log(err);
+                        errorHandling.databaseError(req);
+                    } else {
+                        postsDeleted++;
+
+                        if(postsDeleted === foundJournal.posts.length){
+                            //delete the journal
+                            Journal.findByIdAndDelete(req.params.id, function(err){
+                                if (err) {
+                                    console.log(err);
+                                    errorHandling.databaseError(req);
+                                } else {
+                                    res.redirect("/home");
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        }
+    });
+});
+
 
 
 

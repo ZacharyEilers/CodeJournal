@@ -87,7 +87,7 @@
 
                             <p class="card-text"><%-post.body%></p>
                             
-                            <% if(post.codepenUrl){ %>
+                            <% if(false && post.codepenUrl){ %>
                                 <div id = "codepen" data-url = "<%=post.codepenUrl%>">Loading Codepen...</div>
                             <% } %>
                         </div>
@@ -136,11 +136,15 @@
             var codepenUrl = codepenElem.attr("data-url");
            // var myHeaders = new Headers();
 
-            // fetch("https://codepen.io/api/oembed?url="+codepenUrl+"&format=json",{
-            //     mode: 'no-cors'
+            // fetch("https://codepen.io/api/oembed?url=http://codepen.io/superoak/pen/dPrEvP&format=json",{
+            //     headers:{
+            //         'Access-Control-Allow-Origin':'true'
+            //     },
+            //     method: 'POST'
             // }
             // ).then(function(response) {
-            //     return response.json();
+            //     console.log(response.body);
+            //     return response;
             // }).then(function(myJson){
             //     console.log(myJson);
             // });

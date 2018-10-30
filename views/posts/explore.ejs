@@ -13,7 +13,7 @@
                     <%}%>
             </form>
 
-        
+        <% if (posts.length >= 1){ %>
         <div class="card-columns">
             <%posts.forEach(function(post){%>
                 <div class="card">
@@ -24,12 +24,17 @@
                         <p class="card-text"><%-post.body.substring(0, 100)%></p>
                         <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
                     </div>
+                    <% if (post && post.partOfJournal && post.partOfJournal.title) { %>
                     <div class="card-footer">
                         Part of the journal <em><%=post.partOfJournal.title%></em> by <em><%=post.partOfJournal.author.username%></em>
                     </div>
+                    <% } %>
                 </div>
             <%})%>
         </div>
+       <% } else { %>
+        <p>Sorry, no posts were found</p>
+        <% } %>
         
     </div>
 <% include ../partials/footer.ejs%>
