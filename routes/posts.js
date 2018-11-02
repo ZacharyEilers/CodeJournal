@@ -107,9 +107,16 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
         username: req.user.username,
     };
     
-    console.log("Codepen URL: "+req.body.codepenUrl);
+    var isPrivate = false;
     
-    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id, codepenUrl: req.body.codepenUrl};
+    if(req.body.privacy == "private"){
+        isPrivate = true;
+    }
+    
+    // console.log("Codepen URL: "+req.body.codepenUrl);
+    
+    
+    var newPost = {title: title, body: body, author: author, partOfJournal: req.params.id, isPrivate: isPrivate, codepenUrl: req.body.codepenUrl};
     
     
     function updateJournal(newlyCreated){
@@ -151,7 +158,7 @@ router.post("/journals/:id/create", middleware.isLoggedIn, function(req, res){
 //SHOW POST
 
 //OPEN POST - SHOW PAGE
-router.get("/posts/:id", middleware.isLoggedIn, function(req, res){
+router.get("/posts/:id", middleware.authorizeShowPost, function(req, res){
         Post.findById(req.params.id).populate("comments").exec(function(err, foundPost){
             if (err) {
                 console.log(err);

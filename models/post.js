@@ -7,6 +7,7 @@ var postSchema = new mongoose.Schema({
    totalImpressions: {type: Number, default: 0},
    uniqueImpressions: {type: Number, default: 0},
    lastUpdated: String,
+   isPrivate: {type: Boolean, default: false},
    partOfJournal: {
        type: mongoose.Schema.Types.ObjectId,
        ref: "Journal"

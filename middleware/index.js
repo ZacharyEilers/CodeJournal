@@ -93,5 +93,34 @@ middlewareObj.isLoggedIn = function(req, res, next){
    res.redirect("/login");
 }
 
+middlewareObj.authorizeShowPost = function(req, res, next){
+    
+    if(req.isAuthenticated()){
+        //find the post and check if the post is private
+        Post.findById(req.params.id, function(err, foundPost) {
+           if (err) {
+               errorHandling.databaseError(req);
+           } else {
+               if(foundPost.isPrivate == true){
+                   
+                   if (foundPost.author.id.equals(req.user.id)) {
+                       //let the author of this post view the post
+                       return next();
+                   } else {
+                       //tell the user that this post is private and they can't view it
+                       req.flash("The author of this post has marked it as private. You are not authorized to view this post.");
+                       res.redirect("back");
+                   }
+               } else{
+                   return next();
+               }
+           }
+        });
+    } else{
+        req.flash("Please login");
+        res.redirect("/login");
+    }
+}
+
 
 module.exports = middlewareObj;

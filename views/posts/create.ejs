@@ -1,7 +1,26 @@
 <% include ../partials/header.ejs%>
 
-<div class = "container"> 
+<div class = "container">
+   
     <form action = "/journals/<%=id%>/create" method = "POST">
+        
+        
+    <div class = "row">
+        <div class = "col-12 col-md-8">
+             <h1>Create a post</h1>
+        </div>
+        <div class = "col-md-4">
+             <div class="btn-group btn-group-toggle align-bottom mt-2" data-toggle="buttons">
+              <label class="btn btn-outline-dark active">
+                <input name = "privacy" value = "public" type="radio" name="options" id="option1" autocomplete="off" checked> Public
+              </label>
+              <label class="btn btn-outline-secondary">
+                <input name = "privacy" value = "private" type="radio" name="options" id="option2" autocomplete="off"> Private
+              </label>
+            </div>
+        </div>
+    </div>
+        
         <div class="form-group">
             <label for="nameInput">Title</label>
             <input name = "title" type="text" class="form-control" id="nameInput" placeholder="Make a flashy headline" required>
@@ -13,11 +32,11 @@
             <textarea name = "body" class="form-control" id="bodyInput" placeholder = "The meat of your new post" rows="6" required></textarea>
         </div>
         
-        <div class="form-group">
-            <label for="bodyInput">Codepen Project Url</label>
-            <input name = "codepenUrl" class="form-control" id="bodyInput" placeholder = "The meat of your new post"></input>
-            <small class = "form-text text-muted">Optional</small>
-        </div>
+        <!--<div class="form-group">-->
+        <!--    <label for="bodyInput">Codepen Project Url</label>-->
+        <!--    <input name = "codepenUrl" class="form-control" id="bodyInput" placeholder = "The meat of your new post"></input>-->
+        <!--    <small class = "form-text text-muted">Optional</small>-->
+        <!--</div>-->
         
         
         <button type="submit" class="btn btn-primary">Submit</button>
