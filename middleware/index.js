@@ -108,7 +108,7 @@ middlewareObj.authorizeShowPost = function(req, res, next){
                        return next();
                    } else {
                        //tell the user that this post is private and they can't view it
-                       req.flash("The author of this post has marked it as private. You are not authorized to view this post.");
+                       req.flash("error", "The author of this post has marked it as private. You are not authorized to view this post.");
                        res.redirect("back");
                    }
                } else{
@@ -117,7 +117,7 @@ middlewareObj.authorizeShowPost = function(req, res, next){
            }
         });
     } else{
-        req.flash("Please login");
+        req.flash("error", "Please login");
         res.redirect("/login");
     }
 }
