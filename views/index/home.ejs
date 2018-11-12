@@ -1,4 +1,4 @@
-<% include ../partials/header.ejs%>
+<%- include('../partials/header.ejs', {active: "home"}); %>%>
 
     <div class = "container">
         
@@ -44,6 +44,11 @@
                                               <p class="card-text"><%-journal.posts[i].body.substring(0, 100)%></p>
                                               <a href="/posts/<%=journal.posts[i]._id%>" class="btn btn-primary">View</a>
                                           </div>
+                                          <%if(journal.posts[i].isPrivate == true){%>
+                                              <div class = "card-footer">
+                                                  Private <i class="fas fa-lock"></i>
+                                              </div>
+                                          <% } %>
                                     </div>
                                 </div>
                             </div>
@@ -59,6 +64,11 @@
                                             <p class="card-text"><%-journal.posts[0].body.substring(0, 100)%></p>
                                             <a href="/posts/<%=journal.posts[0]._id%>" class="btn btn-primary">View</a>
                                         </div>
+                                        <%if(journal.posts[0].isPrivate == true){%>
+                                              <div class = "card-footer">
+                                                  Private <i class="fas fa-lock"></i>
+                                              </div>
+                                         <% } %>
                                   </div>
                             </div>
                         </div>

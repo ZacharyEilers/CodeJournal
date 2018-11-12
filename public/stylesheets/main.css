@@ -40,3 +40,6 @@
 .journalDeleteForm{
     margin-top: 40px;
 }
+.fas.fa-lock{
+   display:inline-block; 
+}

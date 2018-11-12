@@ -1,6 +1,9 @@
-<% include ../partials/header.ejs%>
+<%- include('../partials/header.ejs', {active: "create-journal"}); %>
 
+<% include ../partials/ckeditor.ejs %>
+ 
 <div class = "container">
+
    
     <form action = "/journals/<%=id%>/create" method = "POST">
         
@@ -31,6 +34,10 @@
             <label for="bodyInput">Body</label>
             <textarea name = "body" class="form-control" id="bodyInput" placeholder = "The meat of your new post" rows="6" required></textarea>
         </div>
+        
+        <script>
+            CKEDITOR.replace( 'body' );
+        </script>
         
         <!--<div class="form-group">-->
         <!--    <label for="bodyInput">Codepen Project Url</label>-->

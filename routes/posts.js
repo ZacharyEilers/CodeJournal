@@ -255,6 +255,9 @@ router.get("/posts/:id/edit", middleware.checkPostOwnershipForEdit, function(req
 
 //UPDATE ROUTE
 router.put("/posts/:id", middleware.checkPostOwnershipForEdit, function(req, res){
+    
+    req.body.post.isPrivate = req.body.privacy == "public" ? false : true;
+    
     Post.findOneAndUpdate({_id:req.params.id}, req.body.post, function(err, updatedCampground){
         if (err) {
             console.log(err);

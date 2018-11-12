@@ -1,4 +1,4 @@
-<% include ../partials/header.ejs%>
+<%- include('../partials/header.ejs', {active: "create-journal"}); %>%>
 
 <div class = "container form"> 
     <form action = "/journals/<%=journal._id%>/?_method=PUT" method = "POST" class = "form">

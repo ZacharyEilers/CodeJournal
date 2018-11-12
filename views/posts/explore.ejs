@@ -1,4 +1,4 @@
-<% include ../partials/header.ejs%>
+<%- include('../partials/header.ejs', {active: "explore"}); %>%>
 
     <div class = "container">
             
@@ -16,6 +16,7 @@
         <% if (posts.length >= 1){ %>
         <div class="card-columns">
             <%posts.forEach(function(post){%>
+                <% if(post.isPrivate == false) {%>
                 <div class="card">
                 <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
                     <div class="card-body">
@@ -30,6 +31,7 @@
                     </div>
                     <% } %>
                 </div>
+              <% } %>
             <%})%>
         </div>
        <% } else { %>
