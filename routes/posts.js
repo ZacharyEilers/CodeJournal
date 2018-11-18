@@ -6,6 +6,7 @@ var express     = require("express"),
 var Post = require("../models/post.js");
 var Comment = require("../models/comment.js");
 var Journal = require("../models/journal.js");
+var User = require("../models/user.js");
 
 var cTable = require('console.table');
 var seeds = require("../seeds.js");
@@ -39,7 +40,7 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
                 var journalsReady = [];
                
                 if (foundJournals.length === 0) {
-                    res.render("index/home", {journals: journalsReady, noJournals: true});
+                    res.render("index/home", {journals: journalsReady, noJournals: true, followedPosts: []});
                 } else{
                     foundJournals.forEach(function(journal){
                         Journal.findById(journal._id).populate("posts").exec(function(err, populatedJournal){
@@ -51,41 +52,54 @@ router.get("/home", middleware.isLoggedIn, function(req, res){
 
                                 if(numUserJournals === journalsReady.length){
                                     
-                                    //eval(require('locus'));
+                                    //get users from following array
+                                    //get posts from those users starting at the end and push to an array
+                                    //clip the array to make it max 20 posts
+                                    //send the array to the home page
 
-                                    // journalsReady.forEach(function(journal){
-                                    //    for(var i = 0; i<2; i++){
-                                    //        console.log("Journal post "+ i + " title " + journal.posts[i].title);
-                                    //    }
-                                    // });
-                                    
-                                    //eval(require("locus"));
-                                    
-                                    res.render("index/home", {journals: journalsReady});
+                                    User.findById(req.user._id).populate("following").exec(function(err, populatedUser){
+                                        if (err) {
+                                            console.log(err);
+                                            errorHandling.databaseError();
+                                        } else {
+
+                                            var postsToShow = [];
+                                           
+                                            if (populatedUser.following.length == 0) {
+                                                res.render("index/home", {journals: journalsReady, followedPosts: postsToShow});
+                                            } else {
+                                                populatedUser.following.forEach(function(user, index){ 
+
+                                                    Post.findOne({'author.username': user.username}, function(err, postToBePushed){
+                                                        if (err) {
+                                                            errorHandling.databaseError();
+                                                        } else {
+                                                            if(postToBePushed){
+                                                            //push each post to the array
+                                                             postsToShow.push(postToBePushed);
+                                                            }
+
+                                                            if(index === populatedUser.following.length - 1){
+                                                                res.render("index/home", {journals: journalsReady, followedPosts: postsToShow});
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        }
+                                    });
                                 } else{
                                     //res.send("INTERNAL SERVER ERROR");
                                 }
                             }
                         });
                     });
-                }
-                
-                // Post.find({'author.username': req.user.username}, function(err, foundPosts){
-                //     if (err) {
-                //         console.log(err);
-                //     } else {
-                        
-                //     }
-                // });
-    
+                }     
             }
         });
 
         console.log("show home executed");
-
     }
-
-    //seeds.seedDBWithJournalsAndPosts(req, showHome);
     showHome();
     
 });
@@ -224,13 +238,23 @@ router.get("/posts/:id", middleware.authorizeShowPost, function(req, res){
                         //continue, and render the show page
                         console.log(newPost.codepenUrl);
 
+                        //just check and see if the user has already followed the user who posted this
+                        var userHasAlreadyFollowedThisPerson = false;
+                        User.findById(req.user._id).populate("following").exec(function(err, populatedUser){
+                            populatedUser.following.forEach(function(followedUser){
+                                if(followedUser.username == newPost.author.username){
+                                    userHasAlreadyFollowedThisPerson = false;
+                                }
+                             });
+                        });
+
                          //if user hasn't liked the post
                         if(userHasNotLikedPost){
                             //show an enabled like button
-                            res.render("posts/show", {post: newPost, enabledLikeButton: true});
+                            res.render("posts/show", {post: newPost, enabledLikeButton: true, followedThisUserAlready: userHasAlreadyFollowedThisPerson});
                         } else{
                             //show an disabled like button
-                            res.render("posts/show", {post: newPost, enabledLikeButton: false});
+                            res.render("posts/show", {post: newPost, enabledLikeButton: false, followedThisUserAlready: userHasAlreadyFollowedThisPerson});
                         }
                         
                     }

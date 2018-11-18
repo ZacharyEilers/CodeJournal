@@ -58,7 +58,7 @@
         <li class = "nav-item" ><a class = "nav-link" href="/login">Login</a></li>
         <li class = "nav-item" ><a class = "nav-link" href="/register">Sign Up</a></li>
       <% } else { %>
-        <li class = "nav-item" ><a class = "nav-link" href = "#">Signed In As <%= currentUser.username %><%if(currentUser.isAdmin){%> - Admin <%} else if(currentUser.isModerator){%> - Moderator <%}%></a></li>
+        <li class = "nav-item" ><a class = "nav-link" href = "/users/<%=currentUser.username%>">Signed In As <%= currentUser.username %><%if(currentUser.isAdmin){%> - Admin <%} else if(currentUser.isModerator){%> - Moderator <%}%></a></li>
         <li class = "nav-item" ><a class = "nav-link" href="/logout">Logout</a></li>
       <% } %>
 

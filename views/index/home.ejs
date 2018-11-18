@@ -21,6 +21,7 @@
             <h1 class = "text-center">Home</h1>
                 
                 <h2 class = "text-left">Journals</h2>
+                <% if(journals.length > 0) { %>
                 <% journals.forEach(function(journal, index){ %>
                   <div class = "journal">
                     <p>
@@ -76,8 +77,37 @@
                     </div>
                   </div>
                 <% }) %>
-              </div>
+            <% } else { %> 
+                <h4 class="text-muted">You haven't created any journals yet...</h4>
+                <a class="btn btn-primary" href = "/journals/create">Create a Journal!  <i class="fas fa-plus"></i> </a>
+            <%}%>
+                <div class="col-12">
+                    <hr>
+                        <h3>Posts from journalers you follow</h3>
+                           <% if( followedPosts && followedPosts.length > 0){ %>
+                                <div class = "card-columns">
+                                    <% followedPosts.forEach(function(post){%>
+                                            <div class="card">
+                                                <img class="card-img-top" src="https://bit.ly/2NeIetx" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><%=post.title%></h5>
+                                                    <h6 class="card-subtitle mb-2 text-muted"><%=post.author.username%></h6>
+                                                    <p class="card-text"><%-post.body.substring(0, 100)%></p>
+                                                    <a href="/posts/<%=post._id%>" class="btn btn-primary">View</a>
+                                                </div>
+                                            </div>
+                                    <% })%>
+                                </div>
+                           <% } else {%>
+                               <h4 class="text-muted">The journalers you follow haven't posted anything...</h4>
+                               <div class="row">
+                                  <a class="btn btn-outline-success" href = "/explore">Explore More Journalers!</a>
+                               </div>
+                          <% } %>
+                    </div>
+                </div>
             </div>
+    
 
             <!--<script>-->
             

@@ -1,0 +1,33 @@
+<%- include('../partials/header.ejs', {active: "create-journal"}); %>%>
+
+<div class = "container">
+    <div class = "row">
+        <div class = "col-12 col-md-8 container">
+            <img id = "header-img">
+            <h1><%=user.username%></h1>
+            <p>
+                some bio text... Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                Minus odio expedita repudiandae officiis praesentium dignissimos quia sequi 
+                facilis cumque impedit.
+            </p>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 container">
+            <h2>Journals</h2>
+            <%journals.forEach(function(journal){%>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%=journal.title%></h5>
+                        <p class = "card-text"><%=journal.description%></p>
+                        <a href="/journals/<%=journal._id%>" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            <%})%>
+        </div>
+    </div>
+   
+</div>
+
+<% include ../partials/footer.ejs%>

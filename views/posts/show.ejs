@@ -36,7 +36,11 @@
                             <h6 class="card-subtitle mb-2 text-muted">author's real name</h6>
                             <p class="card-text">Bio text Bio text Bio text Bio
                              text Bio text Bio text Bio text Bio text</p>
-                            <a href="" class="btn btn-outline-primary">Follow Me</a>
+                             <% if (followedThisUserAlready === false){ %>
+                                <a href="/users/<%=post.author.username%>/follow" class="btn btn-outline-primary">Follow Me</a>
+                            <% } else { %>
+                                <a href="/users/<%=post.author.username%>/unfollow" class="btn btn-primary">Unfollow</a>
+                            <% } %>
                         </div>
                     </div>
 

@@ -27,7 +27,7 @@
                     </div>
                     <% if (post && post.partOfJournal && post.partOfJournal.title) { %>
                     <div class="card-footer">
-                        Part of the journal <a href = "/journals/<%=post.partOfJournal._id%>" class = "badge badge-success"><%=post.partOfJournal.title%></a> by <a href = "/users/INSERT USER ID HERE" class = "badge badge-secondary"><%=post.partOfJournal.author.username%></a>
+                        Part of the journal <a href = "/journals/<%=post.partOfJournal._id%>" class = "badge badge-success"><%=post.partOfJournal.title%></a> by <a href = "/users/<%=post.partOfJournal.author.username%>" class = "badge badge-secondary"><%=post.partOfJournal.author.username%></a>
                     </div>
                     <% } %>
                 </div>

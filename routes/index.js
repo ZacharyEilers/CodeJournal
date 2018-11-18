@@ -2,9 +2,13 @@ var express     = require("express"),
     router      = express.Router(),
     passport    = require("passport"),
     errorHandling = require("../errorHandling");
-    User        = require("../models/user.js");
 
 var seeds = require("../seeds.js");
+
+var middleware = require("../middleware");
+
+var User = require("../models/user.js");
+var Journal = require("../models/journal.js");
     
 //root route
 router.get("/", function(req, res){
@@ -44,5 +48,6 @@ router.get("/logout", function(req, res){
 router.get("/bye", function(req, res){
     res.render("index/bye");
 });
+
 
 module.exports = router;

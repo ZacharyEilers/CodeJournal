@@ -8,7 +8,13 @@ var UserSchema = new mongoose.Schema({
     //basic, moderator, admin
     permissionType: {type: String, default: "basic"},
     isModerator: {type: Boolean, default: false},
-    isAdmin: {type: Boolean, default: false}
+    isAdmin: {type: Boolean, default: false},
+    following: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+         }
+    ]
 });
 
 UserSchema.plugin(passportLocalMongoose);
