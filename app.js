@@ -27,6 +27,7 @@ var User = require("./models/user.js");
 
 mongoose.connect("mongodb://localhost/codejournal", {useNewUrlParser: true});
 mongoose.set('useFindAndModify', false);
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
